@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<script type="text/javascript" src="js/jquery.min2.1.4.js"></script>
+<script src="js/jquery.json-2.4.js"></script>
+<script src="js/json2.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/BootstrapMenu.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/hotai/apache.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+    
+   <!--显示测试数据  -->
+   <script type="text/javascript">
+   
+     idot();    
+   
+
+   function idot(){
+		  
+		var html="";
+		
+		$.ajax({
+			type:"POST",
+			contentType:"application/json",
+			dataType:"json",
+			url:"getAll.do",
+			
+			success:function(data){
+				
+				html+="<table class='table'>";
+				html+="<tbody>";
+				
+				$.each(data,
+				   function(i,a){
+					   html+="<tr>";
+					   html+="<td>"+a.id+"</td>";
+					   html+="<td>"+a.name+"</td>";
+					   html+="<td>"+a.info+"</td>";
+					   html+="</tr>";
+				   }		
+				);
+				html+="</tbody>";
+	            html+="</table>";
+	            $("#dad").html(html);
+				
+			},
+			
+			
+		});
+		
+	}
+
+
+
+   </script>
+
+
+
+<body>
+
+<h1>关联表测试</h1><br/><hr/>
+
+<div id="dad"></div>
+
+
+
+
+</body>
+</html>

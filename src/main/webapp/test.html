@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript" src="js/jquery.min2.1.4.js"></script>
+<script src="js/jquery.json-2.4.js"></script>
+<script src="js/json2.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/BootstrapMenu.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/hotai/apache.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    
+
+
+<!-- 保存 -->
+<script type="text/javascript">
+
+
+   $(function(){
+	   $("#save").click(function(){
+		   
+		   var adata={"id":$("#id").val(),
+		              "name":$("#name").val(),		   
+		              "info":$("#info").val()
+		              };
+		   var data=JSON.stringify(adata);
+		   
+		   $.ajax({
+			   type:"POST",
+			   dataType:"json",
+			   data:data,
+			   contentType:"application/json",
+			   url:"saveHero.do",
+			   
+			   success:function(data){
+				   alert("保存成功");
+				   window.locaton.reload();
+			   },
+			   
+			   error:function(data){
+				   alert("保存失败");
+				   window.location.reload();
+			   }
+			   
+		   });
+		   
+		   
+	   });
+   });
+
+</script>
+
+
+<!-- 删除 -->
+<script type="text/javascript">
+
+
+    $(function(){
+    	
+    	$("#delete").click(function(){
+    		
+    		var adata={
+    				   "id":$("#id").val()
+    				 };
+    		var data=JSON.stringify(adata);
+    		
+    		$.ajax({
+    			type:"POST",
+                contentType:"application/json",
+                dataType:"json",
+                data:data,
+                url:"deleteHero.do",
+                
+                success:function(data){
+                	alert("删除成功");
+                	window.location.reload();
+                },
+                
+                error:function(data){
+                
+               	    alert("删除失败");
+                    window.location.relaod();
+                }
+            
+     		});
+  
+    	});
+  	
+    });
+
+</script>
+
+<!-- 一个信息获取一条数据 -->
+<script type="text/javascript">
+
+  $(function(){
+	  
+	  $("#view").click(function(){
+		  
+		  var adata={"name":$("#name").val()};
+		  var data=JSON.stringify(adata);
+		  
+		  $.ajax({
+			  type:"POST",
+			  dataType:"json",
+			  contentType:"application/json",
+			  data:data,
+			  url:"get1.do",
+			  
+			  success:function(data){
+				
+				  document.getElementById("look").value=data.info;
+				  
+			  },
+			  
+			  error:function(){
+				  alert("未找到相关信息，请重新输入需要查找的数据");
+			  }
+			  
+			 
+		  });
+	  
+	  });
+	  
+  });
+
+</script>
+
+<!-- 两个信息获取一条数据，必须两个数据同时出现 -->
+<script type="text/javascript">
+
+		$(function(){
+			
+			$("#view1").click(function(){
+				
+				var adata={"name":$("#name").val(),		
+						   "id":$("#id").val()
+ 			            	};
+				var data=JSON.stringify(adata);
+				
+				$.ajax({
+					type:"POST",
+				    contentType:"application/json",
+				    dataType:"json",
+				    data:data,
+				    url:"get2.do",
+				    
+				    success:function(data){
+				    	
+				    	document.getElementById("look").value=data.info;
+				    }
+				
+				});
+		
+			});
+		
+		});
+
+
+</script>
+
+
+<!-- 根据id获取具体数据 -->
+<script type="text/javascript">
+
+
+     $(function(){
+    	 
+    	 $("#view2").click(function(){
+    		 
+	    	 var adata={"id":$("#id").val()};
+	    	 var data=JSON.stringify(adata);
+	    	 var html="";
+	    	 
+	    	 $.ajax({
+	    		 type:"POST",
+	    		 contentType:"application/json",
+	    		 dataType:"json",
+	    		 data:data,
+	    		 url:"getById.do",
+	
+	    		 success:function(data){
+	    			 
+	    			 //document.getElementById("look").value=data.info;
+	    			 html+="<table class='table'>";
+	    			 html+="<tbody>";
+	    			 html+="<tr>";
+					 html+="<td>"+data.id+"</td>";
+					 html+="<td>"+data.name+"</td>";
+					 html+="<td>"+data.info+"</td>";
+					 html+="</tr>";
+					 html+="</tbody>";
+			         html+="</table>";
+			         $("#muji").html(html);
+	    			 
+	    		 },
+	    		 
+	    	 });
+	    	 
+    	 
+    	 }); 
+    	 
+     });
+</script>
+
+<!-- saveByMerge方法, -->
+<script type="text/javascript">
+
+
+      $(function(){
+    	  
+    	  $("#saveByMerge").click(function(){
+    		  
+    		  var adata={
+    				  "id":$("#id").val(),
+    				  "name":$("#name").val(),
+    				  "info":$("#info").val()
+    		           };
+    		  var data=JSON.stringify(adata);
+    		  
+    		  $.ajax({
+    			  type:"POST",
+    			  contentType:"application/json",
+    			  dataType:"json",
+    			  url:"saveByMerge.do",
+    			  data:data,
+    			  
+    			  success:function(data){
+    				  alert("操作成功");
+    				  window.location.reload();
+    			  },
+    			   			  
+    		  });
+    		    		     		  
+    	  });
+    	     	  
+      });
+
+</script>
+
+<!-- 获取全部数据 -->
+<script type="text/javascript">
+
+  $(function(){
+	  
+	  $("#getAll").click(function(){
+		  idot();
+	  });
+	  
+  });
+
+
+
+function idot(){
+	  
+	var html="";
+	
+	$.ajax({
+		type:"POST",
+		contentType:"application/json",
+		dataType:"json",
+		url:"getAll.do",
+		
+		success:function(data){
+			
+			html+="<table class='table'>";
+			html+="<tbody>";
+			
+			$.each(data,
+			   function(i,a){
+				   html+="<tr>";
+				   html+="<td>"+a.id+"</td>";
+				   html+="<td>"+a.name+"</td>";
+				   html+="<td>"+a.info+"</td>";
+				   html+="</tr>";
+			   }		
+			);
+			html+="</tbody>";
+            html+="</table>";
+            $("#muji").html(html);
+			
+		},
+		
+		
+	});
+	
+}
+
+</script>
+
+<script type="text/javascript">
+
+   $(function(){
+	   
+  $("#select").click(function(){
+	   var html="";
+	   var adata={"id":$("#id").val()};
+	   var data=JSON.stringify(adata);
+	   
+	   $.ajax({
+		   type:"POST",
+		   contentType:"application/json",
+		   dataType:"json",
+		   data:data,
+		   url:"select.do",
+		   
+		   success:function(data){
+				
+				html+="<table class='table'>";
+				html+="<tbody>";
+				
+				$.each(data,
+				   function(i,a){
+					   html+="<tr>";
+					   html+="<td>"+a.id+"</td>";
+					   html+="<td>"+a.name+"</td>";
+					   html+="<td>"+a.info+"</td>";
+					   html+="</tr>";
+				   }		
+				);
+				html+="</tbody>";
+	            html+="</table>";
+	            $("#muji").html(html);
+				
+			},
+		   
+	   });
+	   
+     });
+	   
+   });
+
+</script>
+
+<script type="text/javascript">
+
+
+    $(function(){
+    	
+    	$("#getAll_1").click(function(){
+    		
+    		var html="";
+    		var adata={"id":$("#id").val()};
+    		var data=JSON.stringify(adata);
+    		
+    		$.ajax({
+    			type:"POST",
+    			dataType:"json",
+    			contentType:"application/json",
+    			data:data,
+    			url:"getAll_1.do",
+    			
+    			success:function(data){
+    				
+    				html+="<table class='table'>";
+    				html+="<tbody>";
+    				
+    				$.each(data,
+    				   function(i,a){
+    					   html+="<tr>";
+    					   html+="<td>"+a.id+"</td>";
+    					   html+="<td>"+a.name+"</td>";
+    					   html+="<td>"+a.info+"</td>";
+    					   html+="</tr>";
+    				   }		
+    				);
+    				html+="</tbody>";
+    	            html+="</table>";
+    	            $("#muji").html(html);
+    				
+    			},
+    			
+    		});
+   		
+    	});
+   	
+    });
+
+</script>
+
+
+<script type="text/javascript">
+
+
+   $(function(){
+	   
+	   $("#getAll_2").click(function(){
+		   
+		   var html="";
+		   var adata={"id":$("#id").val(),
+				      "name":$("#name").val()
+		             };
+		   var data=JSON.stringify(adata);
+		   
+		   $.ajax({
+			   type:"POST",
+			   contentType:"application/json",
+			   dataType:"json",
+			   data:data,
+			   url:"getAll_2.do",
+			   
+			   success:function(data){
+   				
+   				html+="<table class='table'>";
+   				html+="<tbody>";
+   				
+   				$.each(data,
+   				   function(i,a){
+   					   html+="<tr>";
+   					   html+="<td>"+a.id+"</td>";
+   					   html+="<td>"+a.name+"</td>";
+   					   html+="<td>"+a.info+"</td>";
+   					   html+="</tr>";
+   				   }		
+   				);
+   				html+="</tbody>";
+   	            html+="</table>";
+   	            $("#muji").html(html);
+   				
+   			},
+   			
+			   
+		   });
+	   
+	   });
+   
+   });
+
+</script>
+
+
+
+
+</head>
+<body>
+
+<h1>测试界面</h1>
+
+ID:<input type="text" id="id"><br/>
+姓名:<input type="text" id="name"><br/>
+信息:<input type="text" id="info"><br/>
+查看1:<input type="text" id="look"><br/>
+<hr>
+<h5>数据加载区</h5>
+<hr>
+<div id="muji"></div>
+
+<button id="save">保存</button><br/>
+<button id="delete">删除</button><br/>
+<button id="view">查看1</button><br/>
+<button id="view1">查看2</button><br/>
+<button id="view2">根据id查看</button><br/>
+<button id="saveByMerge">saveByMerge</button><br/>
+<button id="getAll">获取全部数据</button><br/>
+<button id="select">select获取数据</button><br/>
+<button id="getAll_1">getAll_1</button><br/>
+<button id="getAll_2">getAll_2</button>
+
+
+
+</body>
+</html>

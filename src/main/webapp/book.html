@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<script type="text/javascript" src="js/jquery.min2.1.4.js"></script>
+<script src="js/jquery.json-2.4.js"></script>
+<script src="js/json2.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/BootstrapMenu.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/hotai/apache.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+
+<!-- <script type="text/javascript">
+
+   ($(function(){
+	      
+	   fenye(1);
+	   	   
+   }))()
+   
+</script> -->
+
+
+
+<!-- <script type="text/javascript">
+
+  $(function(){
+	  
+	  var html="";
+	  
+	  $.ajax({
+		  type:"POST",
+		  dataType:"json",
+		  contentType:"application/json",
+		  url:"total.do",
+		  
+		  success:function(data){
+			
+		   var pageCount=(data-1)/3+1;
+		   
+		   //变量要写成var,前台不能写int
+		   for(var i=1;i<=pageCount;i++){
+				html+="<b id='"+i+"' onclick='fenye("+i+")' class='fenye'><"+i+"></b>";
+				html+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			} 
+		   
+		   $("#dad").html(html); 
+		   
+		   
+		  },
+		  
+	  });
+	  
+	  
+  });
+ 
+</script> -->
+
+<script type="text/javascript">
+
+	function fenye(currentPage){
+		
+		var html="";
+  		var adata={"currentPage":currentPage};
+  		var data=JSON.stringify(adata);
+  		
+  		$.ajax({
+  			type:"POST",
+  			contentType:"application/json",
+  			data:data,
+  			dataType:"json",
+  			url:"fenye.do",
+  			
+  			success:function(data){
+  				html+="<table class='table'>";
+				html+="<tbody>";
+				html+="<tr>";
+				html+="<td>id</td>";
+				html+="<td>name</td>";
+				html+="<td>intro</td>";
+				html+="<td>info</td>";
+				html+="</tr>";
+  				
+				$.each(data,
+				   function(i,a){
+					   html+="<tr>";
+					   html+="<td>"+a.id+"</td>";
+					   html+="<td>"+a.name+"</td>";
+					   html+="<td>"+a.intro+"</td>";
+					   html+="<td>"+a.info+"</td>";
+					   html+="</tr>";
+				     }		
+				);
+				html+="</tbody>";
+	            html+="</table>";
+	            $("#mom").html(html);
+  				
+  			},
+  			
+  			
+  		});
+  			
+		
+	} 
+
+</script> 
+
+
+
+<!-- 搜索分页function -->
+<script type="text/javascript">
+
+    function fenyeBySearch(currentPage){
+    	
+       if(currentPage==null){
+    	   currentPage=1;
+       }
+       	
+       var html="";
+ 	   var adata={"search":$("#search").val(),
+ 			      "currentPage":currentPage
+ 	            };
+ 	   
+ 	   var data=JSON.stringify(adata);
+    	
+ 	  $.ajax({
+		   type:"POST",
+		   dataType:"json",
+		   contentType:"application/json",
+		   data:data,
+		   url:"fenyeBySearch.do",
+		   
+		   success:function(data){
+			    html+="<table class='table'>";
+				html+="<tbody>";
+				html+="<tr>";
+				html+="<td>id</td>";
+				html+="<td>name</td>";
+				html+="<td>intro</td>";
+				html+="<td>info</td>";
+				html+="</tr>";
+				
+				$.each(data,
+				   function(i,a){
+					   html+="<tr>";
+					   html+="<td>"+a.id+"</td>";
+					   html+="<td>"+a.name+"</td>";
+					   html+="<td>"+a.intro+"</td>";
+					   html+="<td>"+a.info+"</td>";
+					   html+="</tr>";
+				     }		
+				);
+				html+="</tbody>";
+	            html+="</table>";
+	            $("#mom").html(html);
+			   
+		     },
+		  
+	       });
+ 	  
+ 	    var html1=""; 
+ 	  
+ 	    $.ajax({
+		   	  type:"POST",
+			  dataType:"json",
+			  contentType:"application/json",
+			  url:"number.do",
+			  data:data,
+			  
+			  success:function(data){
+				  
+				  var pageCount=(data-1)/2+1;
+				   
+				   //变量要写成var,前台不能写int
+				   for(var i=1;i<=pageCount;i++){
+					   html1+="<b id='"+i+"' onclick='fenyeBySearch("+i+")' class='fenye'><"+i+"></b>";
+					   html1+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+					} 
+				   
+				   $("#dad").html(html1); 
+				  
+			  },
+ 	    	 	
+ 	    });
+    	   	
+    }
+
+</script>
+
+
+<!-- 根据搜索数据实现分页 -->
+<!-- <script type="text/javascript">
+
+   $(function(){
+	   
+	 $("#searchButton").click(function(){
+		 
+	   var currentPage=document.getElementById(""); 
+		   
+	   var html="";
+	   var adata={"search":$("#search").val()};
+	   alert($("#search").val());
+	   var data=JSON.stringify(adata);
+	   
+	   $.ajax({
+		   type:"POST",
+		   dataType:"json",
+		   contentType:"application/json",
+		   data:data,
+		   url:"fenyeBySearch.do",
+		   
+		   success:function(data){
+			    html+="<table class='table'>";
+				html+="<tbody>";
+				html+="<tr>";
+				html+="<td>id</td>";
+				html+="<td>name</td>";
+				html+="<td>intro</td>";
+				html+="<td>info</td>";
+				html+="</tr>";
+				
+				$.each(data,
+				   function(i,a){
+					   html+="<tr>";
+					   html+="<td>"+a.id+"</td>";
+					   html+="<td>"+a.name+"</td>";
+					   html+="<td>"+a.intro+"</td>";
+					   html+="<td>"+a.info+"</td>";
+					   html+="</tr>";
+				     }		
+				);
+				html+="</tbody>";
+	            html+="</table>";
+	            $("#mom").html(html);
+			   
+		     },
+		  
+	       });
+	   });  
+	   
+   });
+
+</script>
+ -->
+
+
+
+
+
+<body>
+<h2 align="center" style="color:brown;font-size:60px;"> 数据分页测试页面 </h2>
+<div align="center"><input type="text" id="search" ></div>
+<div align="center"><button type="button" id="searchButton" onclick="fenyeBySearch()">搜索一下</button></div>
+<div id="mom"></div>
+<div id="dad" align="center"></div>
+<hr>
+
+
+
+
+
+
+
+
+</body>
+</html>
