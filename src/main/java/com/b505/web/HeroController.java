@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.mahout.cf.taste.common.TasteException;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.b505.bean.Hero;
 import com.b505.json.JsonAnalyze;
 import com.b505.service.IHeroService;
+import com.b505.tools.ImageFilters;
+import com.b505.tools.LoadPicture;
 import com.b505.tools.TryCatchHeroService;
 import com.b505.tools.UserCF;
 
@@ -34,6 +39,10 @@ public class HeroController {
 	private IHeroService iHeroService;
 	@Autowired
 	private UserCF userCF;
+	@Autowired
+	private ImageFilters imageFilters;
+	@Autowired
+	private LoadPicture loadPicture;
 	
 	
 	//дһ���ӿڣ����������ύ����������
@@ -245,5 +254,9 @@ public class HeroController {
 		}
 		return list;
 	}
+	
+	
+	
+	
 
 }
