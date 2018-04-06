@@ -1,0 +1,2 @@
+# ImageProcessing
+基于OCR用java实现的图片文字识别和提取
